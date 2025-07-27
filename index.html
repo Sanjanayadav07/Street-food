@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Food Raw Material Sourcing</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="header">
+            <div class="nav-container">
+                <div class="nav-content">
+                    <div class="logo">
+                        <i class="fas fa-utensils"></i>
+                        Street Food
+                    </div>
+                    <div class="nav-menu">
+                        <button class="nav-btn" onclick="showSection('dashboard')">Dashboard</button>
+                        <button class="nav-btn" onclick="showSection('marketplace')">Marketplace</button>
+                        <button class="nav-btn" onclick="showSection('groups')">Group Orders</button>
+                        <button class="nav-btn" onclick="showSection('suppliers')">Suppliers</button>
+                    </div>
+                    <div class="user-profile">
+                        <div class="user-info">
+                            <i class="fas fa-user-circle"></i>
+                            <span id="currentUser">Vendor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Type Selection (Initial Screen) -->
+        <div id="userSelection" class="section active">
+            <div class="hero-section">
+                <h1>Welcome to Street Food </h1>
+                <p class="hero-subtitle">Connecting street food vendors with trusted suppliers for better prices and
+                    quality ingredients</p>
+            </div>
+            <div class="user-type-grid">
+                <div class="user-type-card vendor-card" onclick="selectUserType('vendor')">
+                    <div class="card-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h3>I'm a Vendor</h3>
+                    <p>Find reliable suppliers, join group orders, and save on raw materials</p>
+                    <div class="card-button">
+                        <button class="btn-modern btn-vendor">Get Started →</button>
+                    </div>
+                </div>
+                <div class="user-type-card supplier-card" onclick="selectUserType('supplier')">
+                    <div class="card-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3>I'm a Supplier</h3>
+                    <p>Connect with local vendors, manage bulk orders, and grow your business</p>
+                    <div class="card-button">
+                        <button class="btn-modern btn-supplier">Join Network →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vendor Dashboard -->
+        <div id="dashboard" class="section">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header-modern">
+                <div class="welcome-section">
+                    <h1 class="dashboard-title">Good morning! 🌅</h1>
+                    <p class="dashboard-subtitle">Here's what's happening with your orders today</p>
+                </div>
+                <div class="dashboard-actions">
+                    <button class="btn-modern btn-primary" onclick="openModal('orderModal')">
+                        <i class="fas fa-plus"></i>
+                        New Order
+                    </button>
+                    <button class="btn-modern btn-secondary" onclick="showSection('groups')">
+                        <i class="fas fa-users"></i>
+                        Join Group
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-grid-modern">
+                <div class="stat-card-modern primary">
+                    <div class="stat-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="activeOrders">3</h3>
+                        <p>Active Orders</p>
+                        <span class="stat-trend positive">+2 from last week</span>
+                    </div>
+                </div>
+                <div class="stat-card-modern success">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="groupOrders">3</h3>
+                        <p>Group Orders</p>
+                        <span class="stat-trend positive">2 active groups</span>
+                    </div>
+                </div>
+                <div class="stat-card-modern warning">
+                    <div class="stat-icon">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalSavings">₹170</h3>
+                        <p>Total Savings</p>
+                        <span class="stat-trend positive">This month</span>
+                    </div>
+                </div>
+                <div class="stat-card-modern info">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>₹2,450</h3>
+                        <p>Monthly Spend</p>
+                        <span class="stat-trend neutral">Average: ₹2,200</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="dashboard-main-grid">
+                <!-- Recent Orders Section -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Recent Orders</h3>
+                        <button class="btn-link" onclick="showSection('marketplace')">View All</button>
+                    </div>
+                    <div class="card-content">
+                        <div class="order-list-modern" id="recentOrdersList">
+                            <!-- Orders will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions Section -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Quick Actions</h3>
+                        <span class="card-subtitle">Get things done faster</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="quick-actions-grid">
+                            <div class="action-item" onclick="showSection('marketplace')">
+                                <div class="action-icon">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <div class="action-text">
+                                    <h4>Find Suppliers</h4>
+                                    <p>Browse trusted suppliers</p>
+                                </div>
+                            </div>
+                            <div class="action-item" onclick="showSection('groups')">
+                                <div class="action-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="action-text">
+                                    <h4>Join Group Order</h4>
+                                    <p>Save with bulk buying</p>
+                                </div>
+                            </div>
+                            <div class="action-item" onclick="openModal('orderModal')">
+                                <div class="action-icon">
+                                    <i class="fas fa-plus-circle"></i>
+                                </div>
+                                <div class="action-text">
+                                    <h4>Create Order</h4>
+                                    <p>Start a new purchase</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Marketplace -->
+        <div id="marketplace" class="section">
+            <div class="marketplace-header">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>Vendor Marketplace</h2>
+                    <button class="btn-primary" onclick="openAddVendorModal()"
+                        style="background: #27ae60; padding: 10px 20px; border-radius: 8px; border: none; color: white; cursor: pointer; font-weight: bold;">
+                        + Add Vendor
+                    </button>
+                </div>
+                <div class="search-filters">
+                    <input type="text" id="searchInput" placeholder="Search" class="search-input">
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="vegetables">Vegetables</option>
+                        <option value="spices">Spices</option>
+                        <option value="oil">Cooking Oil</option>
+                        <option value="flour">Flour & Grains</option>
+                        <option value="dairy">Dairy Products</option>
+                        <option value="meat">Meat & Poultry</option>
+                    </select>
+                    <select id="locationFilter" class="filter-select">
+                        <option value="">All Locations</option>
+                        <option value="nearby">Within 5km</option>
+                        <option value="city">Within City</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="supplier-grid" id="supplierGrid">
+                <!-- Suppliers will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Group Orders -->
+        <div id="groups" class="section">
+            <div class="groups-header">
+                <h2>Group Orders</h2>
+                <button class="btn-primary" onclick="createGroupOrder()">Create New Group Order</button>
+            </div>
+
+            <div class="group-tabs">
+                <button class="tab-btn active" onclick="showGroupTab('available')">Available Groups</button>
+                <button class="tab-btn" onclick="showGroupTab('my-groups')">My Groups</button>
+            </div>
+
+            <div class="group-content">
+                <div id="availableGroups" class="tab-content active">
+                    <div class="group-list" id="availableGroupsList">
+                        <!-- Available groups will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div id="myGroups" class="tab-content">
+                    <div class="group-list" id="myGroupsList">
+                        <!-- My groups will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Supplier Dashboard -->
+        <div id="suppliers" class="section">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header-modern">
+                <div class="welcome-section">
+                    <h1 class="dashboard-title">Supplier Hub Dashboard 📦</h1>
+                    <p class="dashboard-subtitle">Track inventory, fulfill orders, and grow your business network</p>
+                </div>
+                <div class="dashboard-actions">
+                    <button class="btn-modern btn-primary" onclick="openModal('productModal')">
+                        <i class="fas fa-plus"></i>
+                        Add Inventory
+                    </button>
+                    <button class="btn-modern btn-secondary" onclick="showSection('marketplace')">
+                        <i class="fas fa-chart-line"></i>
+                        Sales Analytics
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-grid-modern">
+                <div class="stat-card-modern success">
+                    <div class="stat-icon">
+                        <i class="fas fa-warehouse"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="productsCount">12</h3>
+                        <p>Inventory Items</p>
+                        <span class="stat-trend positive">3 restocked today</span>
+                    </div>
+                </div>
+                <div class="stat-card-modern warning">
+                    <div class="stat-icon">
+                        <i class="fas fa-truck-loading"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="pendingOrders">7</h3>
+                        <p>Orders to Fulfill</p>
+                        <span class="stat-trend neutral">2 urgent deliveries</span>
+                    </div>
+                </div>
+                <div class="stat-card-modern primary">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="monthlyRevenue">₹28,500</h3>
+                        <p>Total Sales</p>
+                        <span class="stat-trend positive">+18% growth</span>
+                    </div>
+                </div>
+                <div class="stat-card-modern info">
+                    <div class="stat-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>31</h3>
+                        <p>Partner Vendors</p>
+                        <span class="stat-trend positive">5 new this month</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="dashboard-main-grid">
+                <!-- Inventory Section -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Inventory Management</h3>
+                        <button class="btn-link" onclick="openModal('productModal')">Add Stock</button>
+                    </div>
+                    <div class="card-content">
+                        <div class="product-grid-modern" id="supplierProductsList">
+                            <!-- Products will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Fulfillment Section -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Order Fulfillment</h3>
+                        <span class="card-subtitle">Process and ship vendor orders</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="order-list-modern" id="supplierOrdersList">
+                            <!-- Orders will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supply Chain Analytics Section -->
+            <div class="business-insights">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Supply Chain Analytics</h3>
+                        <span class="card-subtitle">Monitor distribution and vendor relationships</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="insights-grid">
+                            <div class="insight-item">
+                                <div class="insight-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="insight-content">
+                                    <h4>Top Selling Product</h4>
+                                    <p>Red Chili Powder - 45 orders</p>
+                                </div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="insight-content">
+                                    <h4>Customer Rating</h4>
+                                    <p>4.8/5 stars (24 reviews)</p>
+                                </div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-icon">
+                                    <i class="fas fa-truck"></i>
+                                </div>
+                                <div class="insight-content">
+                                    <h4>Delivery Performance</h4>
+                                    <p>98% on-time delivery</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modals -->
+        <div id="orderModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('orderModal')">&times;</span>
+                <h3>Create New Order</h3>
+                <form id="orderForm">
+                    <div class="form-group">
+                        <label>Product</label>
+                        <select id="orderProduct" required>
+                            <option value="">Select Product</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantity (kg)</label>
+                        <input type="number" id="orderQuantity" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Delivery Date</label>
+                        <input type="date" id="orderDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Special Requirements</label>
+                        <textarea id="orderNotes" placeholder="Any special requirements..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeModal('orderModal')">Cancel</button>
+                        <button type="submit" class="btn-primary">Place Order</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="groupModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('groupModal')">&times;</span>
+                <h3>Create Group Order</h3>
+                <form id="groupForm">
+                    <div class="form-group">
+                        <label>Product</label>
+                        <select id="groupProduct" required>
+                            <option value="">Select Product</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Target Quantity (kg)</label>
+                        <input type="number" id="groupQuantity" required min="10">
+                    </div>
+                    <div class="form-group">
+                        <label>Maximum Vendors</label>
+                        <input type="number" id="maxVendors" required min="2" max="20" value="5">
+                    </div>
+                    <div class="form-group">
+                        <label>Deadline to Join</label>
+                        <input type="date" id="groupDeadline" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="groupDescription" placeholder="Describe the group order..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeModal('groupModal')">Cancel</button>
+                        <button type="submit" class="btn-primary">Create Group</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="productModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('productModal')">&times;</span>
+                <h3>Add New Product</h3>
+                <form id="productForm">
+                    <div class="form-group">
+                        <label>Product Name</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="productCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="vegetables">Vegetables</option>
+                            <option value="spices">Spices</option>
+                            <option value="oil">Cooking Oil</option>
+                            <option value="flour">Flour & Grains</option>
+                            <option value="dairy">Dairy Products</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Price per kg (₹)</label>
+                        <input type="number" id="productPrice" required min="1" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Minimum Order Quantity (kg)</label>
+                        <input type="number" id="productMinOrder" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="productDescription" placeholder="Product description..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeModal('productModal')">Cancel</button>
+                        <button type="submit" class="btn-primary">Add Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Vendor Modal -->
+        <div id="addVendorModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeAddVendorModal()">&times;</span>
+                <h3>Add New Vendor</h3>
+                <form id="addVendorForm">
+                    <div class="form-group">
+                        <label>Vendor Name</label>
+                        <input type="text" id="vendorName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Business Type</label>
+                        <select id="vendorBusinessType" required>
+                            <option value="">Select Business Type</option>
+                            <option value="Street Food Stall">Street Food Stall</option>
+                            <option value="Food Cart">Food Cart</option>
+                            <option value="Restaurant">Restaurant</option>
+                            <option value="Cafe">Cafe</option>
+                            <option value="Food Truck">Food Truck</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" id="vendorLocation" required placeholder="e.g., Karol Bagh, Delhi">
+                    </div>
+                    <div class="form-group">
+                        <label>Rating</label>
+                        <select id="vendorRating" required>
+                            <option value="">Select Rating</option>
+                            <option value="4.0">4.0 ⭐⭐⭐⭐</option>
+                            <option value="4.1">4.1 ⭐⭐⭐⭐</option>
+                            <option value="4.2">4.2 ⭐⭐⭐⭐</option>
+                            <option value="4.3">4.3 ⭐⭐⭐⭐</option>
+                            <option value="4.4">4.4 ⭐⭐⭐⭐</option>
+                            <option value="4.5">4.5 ⭐⭐⭐⭐⭐</option>
+                            <option value="4.6">4.6 ⭐⭐⭐⭐⭐</option>
+                            <option value="4.7">4.7 ⭐⭐⭐⭐⭐</option>
+                            <option value="4.8">4.8 ⭐⭐⭐⭐⭐</option>
+                            <option value="4.9">4.9 ⭐⭐⭐⭐⭐</option>
+                            <option value="5.0">5.0 ⭐⭐⭐⭐⭐</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Requirements (Add up to 5 items)</label>
+                        <div id="requirementsContainer">
+                            <div class="requirement-item">
+                                <input type="text" placeholder="Item name" class="req-name" required>
+                                <input type="text" placeholder="Quantity (e.g., 10kg/week)" class="req-quantity"
+                                    required>
+                                <select class="req-category" required>
+                                    <option value="">Category</option>
+                                    <option value="vegetables">Vegetables</option>
+                                    <option value="spices">Spices</option>
+                                    <option value="oil">Cooking Oil</option>
+                                    <option value="flour">Flour & Grains</option>
+                                    <option value="dairy">Dairy Products</option>
+                                    <option value="meat">Meat & Poultry</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="button" onclick="addRequirementField()" class="btn-secondary"
+                            style="margin-top: 10px;">+ Add Another Requirement</button>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeAddVendorModal()">Cancel</button>
+                        <button type="submit" class="btn-primary">Add Vendor</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>

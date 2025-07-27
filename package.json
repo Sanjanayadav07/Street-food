@@ -1,0 +1,29 @@
+{
+  "name": "Street-food",
+  "version": "1.0.0",
+  "description": "A hyperlocal raw material sourcing platform for street food vendors through group buying",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server . -p 3000 -o",
+    "build": "echo 'Static site - no build needed'",
+    "deploy": "netlify deploy --prod --dir ."
+  },
+  "keywords": [
+    "street-food",
+    "vendors",
+    "sourcing",
+    "group-buying",
+    "marketplace",
+    "hackathon"
+  ],
+  "author": " WomenInTech Team",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "homepage": ""
+}

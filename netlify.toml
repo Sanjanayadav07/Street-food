@@ -1,0 +1,17 @@
+[build]
+  publish = "."
+  command = "echo 'Static site - no build needed'"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[context.production.environment]
+  TOML_ENV = "production"
+
+[context.deploy-preview.environment]
+  TOML_ENV = "deploy-preview"
