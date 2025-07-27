@@ -66,10 +66,10 @@ Street food vendors in India struggle with raw material sourcing from trusted an
 ### Local Development:
 ```bash
 # Clone the repository
-git clone https://github.com/vendorconnect/street-food-sourcing.git
+git clone https://github.com/vendorconnect/Street-food.git
 
 # Navigate to project directory
-cd street-food-sourcing
+cd Street-food
 
 # Install dependencies (optional - for local server)
 npm install
